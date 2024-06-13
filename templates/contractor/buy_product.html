@@ -1,0 +1,67 @@
+{% extends 'contractor/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Buy Product</title>
+{% endblock title %}
+
+
+
+{% block content %}
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(31, 95, 31);">{{message}}</h5></center>
+{% endfor %}
+{% endif %} 
+
+<div class="container-fluid py-5 my-5 px-0">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Buy Product</p>
+    </div> 
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 50%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Order Product</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/buy_product/" method="post" id="myform">
+                    {% csrf_token %}
+                    {% if data %}
+                            {% for i in data %}
+                    <div class="col-5">
+                        <img src="{{i.image}}" style="width: 100%; height: 150px;">
+                    </div>
+                    <div class="col-7">
+                        <h5 class="d-block h5 lh-base mb-4">{{i.product_type}}</h5>
+                        <input type="hidden" value="{{i.tp_id}}" name="tp_id">
+                    </div>    
+                    <div class="col-6">
+                        <label for="oname" class="form-label">Select A Size</label>
+                        <select class="form-select" id="oname" name="size" required>
+                            <option value="">--Select--</option>
+                            {% if data2 %}
+                            {% for i in data2 %}
+                            <option value="{{i.size}}">{{i.size}}</option>
+                            {% endfor %}
+                            {% else %}
+                            <option value="">Sezes are Not Available</option>
+                            {% endif %}
+                        </select></div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Order Now">
+                    </div>
+                    {% endfor %}
+                            {% endif %}
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+{% endblock content %}

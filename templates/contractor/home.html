@@ -1,0 +1,66 @@
+{% extends 'contractor/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+{% block home %} active {% endblock home %}
+
+{% block content %}
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-3 text-white animated slideInRight">Contractor</h1>
+        <nav aria-label="breadcrumb">
+       
+        </nav>
+    </div>
+</div>
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(192, 51, 51);">{{message}}</h5></center>
+{% endfor %}
+{% endif %}
+
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-5 mb-3">Products</h1>
+           
+        </div>
+        <div class="search">
+            <form action="../search" method="post">
+                {% csrf_token %}
+                <input type="text" placeholder="Search category" name="srch" id="mydiv">
+                <button style="border-radius:10px;">
+                    <!-- <i class="fa fa-car" style="font-size: 18px;"></i> -->
+                    <img style="height: 10px;" src="{% static 'user/img/search.png' %}" alt="Image">
+                </button>
+                <br><br>
+            <div class="row g-4">
+                {% if data %}
+                {% for i in data %}
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="border-left: 1px solid silver;">
+                    <img class="img-fluid" style="height: 250px; width: 100%;" src="{{i.image}}" alt="">
+                    <!-- <td><img style="height: 250px; width: 100%;" src="{{i.image}}" alt=""></td> -->
+                    <div class="bg-light p-4">
+                        <h6>{{i.ct.category}}</h6>
+                        <a class="d-block h5 lh-base mb-4" href="">{{i.product_type}}</a>
+                        <div class="text-muted border-top pt-4">
+                            <div class="row">
+                                
+                                <div class="col-6">
+                                    <small class="me-3"><a href="/buy/{{i.tp_id}}" class="btn btn-primary px-3 d-none d-lg-block">Buy Now</a></small>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock content %}

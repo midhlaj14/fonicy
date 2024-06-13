@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>master register</title>
+{% endblock title %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+<div class="container-fluid py-5 my-5 px-0" style="width: 50%;">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="width: 50%;">
+        <p class="fw-medium text-uppercase text-primary mb-2">master register</p>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">master register</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/master_reg/" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <label for="use" class="form-label">Username</label>
+                        <input type="text" name="use" class="form-control" id="use" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" name="pas" class="form-control" id="password" required>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Register">
+                    </div>
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endblock content %}

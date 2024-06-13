@@ -1,0 +1,49 @@
+{% extends 'employee/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Update Stock</title>
+{% endblock title %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+<div class="container-fluid py-5 my-5 px-0" style="width: 50%;">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="width: 50%;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Update Stock</p>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Update Stock</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/update_stock/" method="post" id="myform">
+                    {% csrf_token %}
+                    {% if data %}
+                    {% for i in data %}
+                    <div class="col-12">
+                        <label for="pty" class="form-label">Product type</label>
+                        <input type="hidden" name="tp_id" value="{{i.tp_id}}">
+                        <input type="text" name="pty" readonly class="form-control" value="{{i.product_type}}" id="pty" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="sto" class="form-label">Stock</label>
+                        <input type="number" name="sto" class="form-control" id="sto" required>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Update">
+                    </div>
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endblock content %}

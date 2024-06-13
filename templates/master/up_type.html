@@ -1,0 +1,57 @@
+{% extends 'master/index.html' %}
+
+{% block title %}
+<title>Update Product Type</title>
+{% endblock title %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Update Product Type</h1>
+    
+</div><!-- End Page Title -->
+<br><br>
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Update Product Type</h5>
+
+            <!-- Vertical Form -->
+            <form class="row g-3"method='post' action='/update_type/' enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="col-12">
+                <select name="n1" class="form-select" required>
+                    {% if data %}
+                    {% for i in data %}
+                    <option selected="" value="{{i.ct.ct_id}}">{{i.ct.category}}</option>
+                    {% endfor %}
+                    {% endif %}
+                    {% if data2 %}
+                    {% for i in data2 %}
+                    <option value="{{i.ct_id}}">{{i.category}}</option>
+                    {% endfor %}
+                    {% endif %}
+                  </select>
+            </div>
+            {% if data %}
+            {% for i in data %}
+            <div class="col-12">
+                <label for="item" class="form-label">Product type</label>
+                <input type="hidden" value="{{i.tp_id}}" name="tp_id">
+                <input type="text" name="n2" value="{{i.product_type}}" class="form-control" id="item" required>
+            </div>
+            <div class="col-12">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" name="n4" value="{{i.image}}" class="form-control" id="image">
+                <img src="{{i.image}}" style="width: 100px; height: 80px;">
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </div>
+            </form><!-- Vertical Form -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

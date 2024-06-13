@@ -1,0 +1,84 @@
+{% extends 'master/index.html' %}
+
+{% block title %}
+<title>Buyied Product Details</title>
+{% endblock title %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>purchased item</h1>
+    
+</div><!-- End Page Title -->
+<br><br>
+    {% if messages %}
+    {% for message in messages %}
+        <center><h5 style="color: rgb(17, 61, 17);">{{message}}</h5></center>
+    {% endfor %}
+    {% endif %}
+
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card top-selling overflow-auto">
+
+                        <div class="card-body pb-0">
+                            <h5 class="card-title">purchased item<span>| Details</span></h5>
+
+                            <div >
+                                <a href="/delivered1" class="btn btn-primary btn-sm">Delivered</a>
+                            
+                        
+                                <a href="/notdelivered1" class="btn btn-primary btn-sm"> Not Delivered</a>
+                            </div>
+    
+                            <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                <th scope="col">Sl.No</th>
+                                <th scope="col">Name</th>
+                                
+                                <th scope="col">Product Type</th>
+                                <th scope="col">Order Date</th>
+                                <th scope="col">Required Date</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Required Load</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for i in data %}
+                                <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.log}}</td>
+                             
+                                <td>{{i.tp_id}}</td>
+                                <td>{{i.date}}</td>
+                                <td>{{i.re_date}}</td>
+                                <td>{{i.size}}</td>
+                                <td>{{i.price}}</td>
+                                <td>{{i.load}}</td>
+                                
+                                <td>{{i.amount}}</td>
+                                {% if i.status == 0 %}
+                                <td><b style="color: blue;">Not Delivered</b></td>
+                                {% elif i.status == 1 %}
+                                <td><b style="color: rgb(12, 119, 35);">Delivered</b></td>
+                                {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>   
+  {% endblock content %}

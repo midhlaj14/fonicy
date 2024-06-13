@@ -1,0 +1,65 @@
+{% extends 'master/index.html' %}
+
+{% block title %}
+<title>Product Price</title>
+{% endblock title %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Update Product Price</h1>
+    
+</div><!-- End Page Title -->
+<br><br>
+    {% if messages %}
+    {% for message in messages %}
+        <center><h5 style="color: rgb(17, 61, 17);">{{message}}</h5></center>
+    {% endfor %}
+    {% endif %}
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Update Product Price</h5>
+
+            <!-- Vertical Form -->
+            <form class="row g-3"method='post' action='/update_spec/'>
+                {% csrf_token %}
+            <div class="col-12">
+                <select name="n2" class="form-select" required>
+                    {% if data %}
+                    {% for i in data %}
+                    <option  value="{{i.tp.tp_id}}">{{i.tp.product_type}}</option>
+                    {% endfor %}
+                    {% endif %}
+                    {% if data2 %}
+                    {% for i in data2 %}
+                    <option  value="{{i.tp_id}}">{{i.product_type}}</option>
+                    {% endfor %}
+                    {% endif %}
+                  </select>
+            </div>
+            {% if data %}
+            {% for i in data %}
+            <div class="col-12">
+                <input type="hidden" value="{{i.ts_id}}" name="n1">
+                <label for="size" class="form-label">Size</label>
+                <select name="n3" class="form-select" required>
+                    <option value="{{i.size}}">{{i.size}} </option>
+                    <option value="1">1</option>
+                   
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="pri" class="form-label">Price</label>
+                <input type="number" name="n4" class="form-control" value="{{i.price}}" id="pri" required>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </div>
+            </form><!-- Vertical Form -->
+        </div>
+    </div>
+</div>
+
+  {% endblock content %}

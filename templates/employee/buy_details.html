@@ -1,0 +1,127 @@
+{% extends 'employee/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Buyied Product Details</title>
+{% endblock title %}
+
+
+{% block s %} active {% endblock s %}
+
+
+{% block content %}
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(31, 95, 31);">{{message}}</h5></center>
+{% endfor %}
+{% endif %} 
+
+<div class="container-fluid py-5 my-5 px-0">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="fw-medium text-uppercase text-primary mb-2">purchased item  </p>
+    </div> 
+        <div >
+            <a href="/delivered" class="btn btn-primary btn-sm">Delivered</a>
+        
+    
+            <a href="/notdelivered" class="btn btn-primary btn-sm"> Not Delivered</a>
+        </div>
+   
+  
+    
+
+            
+                    
+                      
+    {% if data %}
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <section class="section dashboard">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card top-selling overflow-auto">
+            
+                                <div class="card-body pb-0">
+                                    <h5 class="card-title">purchased item  <span>| Details</span></h5>
+            
+                                    <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Sl.No</th>
+                                        <th scope="col">Name</th>
+                                      
+                                        <th scope="col">Product Type</th>
+                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Required Date</th>
+                                        <th scope="col">Size</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Required Load</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Statuss</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {% for i in data %}
+                                        <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{i.log}}</td>
+                                     
+                                       
+                                       
+                                     
+                                        <td>{{i.tp_id}}</td>
+                                        <td>{{i.date}}</td>
+                                        {% if i.status == 0 %}
+                                        {% if i.diff <= 5 %}
+                                        <td style="color:red"> {{i.re_date}}</td>
+                                        {% elif i.diff <= 10 %}
+                                        <td > {{i.re_date}}</td>
+                                        {% else %}
+                                        <td> {{i.re_date}}</td>
+                                        {% endif %}
+                                        {% else %}
+                                        <td > {{i.re_date}}</td>
+                                        {% endif %}
+                                        <td>{{i.size}}</td>
+                                        <td>{{i.price}}</td>
+                                        <td>{{i.load}}</td>
+                                        
+                                        <td>{{i.amount}}</td>
+
+                                        {% if i.status == 0 %}
+                                        <td><a href="/deliver/{{i.or_id}}" class="btn btn-primary btn-sm">Deliver</a></td>
+                                        {% elif i.status == 1 %}
+                                        <td><b style="color: rgb(12, 119, 35);">Delivered</b></td>
+                                        {% endif %}
+
+                                        {% if i.status1 == 0 %}
+                                        <td><a href="/order_picked/{{i.or_id}}" class="btn btn-primary btn-sm">pick order</a></td>
+                                        {% elif i.status1 == 1 %}
+                                        <td><b style="color: rgb(12, 119, 35);">order picked </b></td>
+                                        {% endif %}
+                                        </tr>
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> 
+        </div> 
+    </div>
+    {% endif %}
+</div>
+
+{% endblock content %}

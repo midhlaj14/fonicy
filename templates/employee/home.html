@@ -1,0 +1,167 @@
+{% extends 'employee/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+
+{% block home %} active {% endblock home %}
+
+{% block content %}
+<!-- Carousel Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <h1 class="display-3 text-white animated slideInRight">Employee</h1>
+        <nav aria-label="breadcrumb">
+       
+        </nav>
+    </div>
+</div>
+<br>
+<section class="section dashboard"> 
+    
+    <!-- Left side columns -->
+        <div class="row" >
+            <div class="col-xxl-4 col-md-6" style="width: 30px;  ">
+                <div class="card info-card sales-card" style="height: 170px;">
+
+                </div>
+            </div>
+            
+
+            <div class="col-xxl-4 col-md-6" style="width: 350px;">
+                <div class="card info-card sales-card">
+
+                <div class="card-body">
+                   
+                    <br>
+                    <div  >
+                        <h1><i class="fas fa-credit-card" ></i></h1>
+   
+                    </div>
+                      <span>100% SECURE PAYMENTS</span>
+                      <br>
+                      <p style="font-size:small;">Moving your card details to a much more</p>
+                </div>
+
+                </div>
+            </div>
+            
+            <div class="col-xxl-4 col-md-6" style="width: 350px;">
+                <div class="card info-card sales-card">
+
+                <div class="card-body">
+                   
+                    <br>
+                    <div  >
+                        <h1><i class="fas fa-shield-alt" ></i></h1>
+   
+                    </div>
+                      <span>TRUST PAY</span>
+                      <br>
+                      <p style="font-size:small;">100% Payment Protection</p>
+                </div>
+
+                </div>
+            </div>
+            
+            <div class="col-xxl-4 col-md-6" style="width: 350px;">
+                <div class="card info-card sales-card">
+
+                <div class="card-body">
+                   
+                    <br>
+                    <div  >
+                        <h1><i class="fas fa-truck" ></i></h1>
+   
+                    </div>
+                      <span>SHIPPING</span>
+                      <br>
+                      <p style="font-size:small;">Free shipping on all orders <p>
+                </div>
+
+                </div>
+            </div>
+            
+            <div class="col-xxl-4 col-md-6" style="width: 350px;">
+                <div class="card info-card sales-card">
+
+                <div class="card-body">
+                   
+                    <br>
+                    <div  >
+                        <h1><i class="fas fa-comments" ></i></h1>
+   
+                    </div>
+                      <span>SUPPORT 24/7</span>
+                      <br>
+                      <p style="font-size:small;">We support online/offline 24 hours</p>
+                </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+
+</section>
+
+<div class="row">
+   
+        <div class="col-xxl-4 col-md-6" style="width: 10px;  ">
+            <div class="card info-card sales-card" style="height: 170px;">
+
+            </div>
+        </div>
+
+    <div class="col-xxl-4 col-md-6">
+        <br><br><br>
+        <div class="card info-card sales-card">
+
+        
+
+        <div class="card-body">
+            <h5 class="card-title">Stock <span>| Update</span></h5>
+
+            <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-journal-text"></i>
+            </div>
+            <div class="ps-3">
+                <a href="/add_stock"><h5>Update stock</h5></a>
+
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+       
+
+        <div class="col-xxl-4 col-md-6">
+            <br><br><br>
+            <div class="card info-card sales-card">
+
+            <div class="card-body">
+                <h5 class="card-title">Order <span>| Details</span></h5>
+
+                <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-box"></i>
+                </div>
+                <div class="ps-3">
+                    <a href="/buy_details"><h5>purchased item </h5></a>
+                </div>
+                </div>
+            </div>
+       
+
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+<!-- Carousel End -->
+
+{% endblock content %}

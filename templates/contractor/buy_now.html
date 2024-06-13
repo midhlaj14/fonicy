@@ -1,0 +1,210 @@
+{% extends 'contractor/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Buy Now</title>
+{% endblock title %}
+
+
+{% block content %}
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(31, 95, 31);">{{message}}</h5></center>
+{% endfor %}
+{% endif %} 
+<style>
+    .error{
+        color:red
+    }
+</style>
+
+<div class="container-fluid py-5 my-5 px-0">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Buy Now</p>
+    </div> 
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 40%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Buy Product</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/buy_now/" method="post" id="myform" onsubmit="return validate();">
+                    {% csrf_token %}
+                    {% if data %}
+                            {% for i in data %}
+                    <div class="col-12">
+                        <h5 class="d-block h5 lh-base mb-4" style="text-align: center;">{{i.product_type}}</h5>
+                        <input type="hidden" value="{{i.tp_id}}" name="tp_id">
+                    </div>  
+                    {% if data2 %}
+                            {% for i in data2 %}  
+                    <div class="col-6">
+                        <label for="size" class="form-label">Size</label>
+                        <input type="number" readonly class="form-control" id="size" value="{{i.size}}" name="size" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="pri" class="form-label">Price</label>
+                        <input type="number" readonly class="form-control" id="pri" value="{{i.price}}" name="price" required>
+                    </div>
+                    {% endfor %}
+                            {% endif %} 
+
+                    <div class="col-6">
+                        <label for="rdt" class="form-label">Required Date</label>
+                        <input type="date" class="form-control" id="lo" name="rdt" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="lo" class="form-label">Required Number of quantity</label>
+                        <input type="number" class="form-control" id="loc" name="lod" onkeyup="cal();" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="avs" class="form-label" style="color: brown;">Available Stock</label>
+                        <input type="number" readonly class="form-control" value="{{i.stock}}" id="avs" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="rst" class="form-label">Required Stock</label>
+                        <input type="number" readonly class="form-control" value="0" id="rst" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="tot" class="form-label">Total</label>
+                        <input type="number" readonly class="form-control" id="tot" name="amnt" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="cno" class="form-label">Card Number</label>
+                        <input type="number" class="form-control" name="cno" id="cno"  required>
+                    </div>
+                    <div class="col-6">
+                        <label for="cvv" class="form-label">Cvv</label>
+                        <input type="number" class="form-control" name="cvv" id="cvv"  required>
+                    </div>
+                    <div class="col-6">
+                        <label for="cdt" class="form-label">Card Expire Date</label>
+                        <input type="date" class="form-control" id="cdt" name="cdt" required>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Buy Now">
+                    </div>
+                    {% endfor %}
+                            {% endif %}
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script>
+        window.onload=function(){//from ww  w . j  a  va2s. c  o  m
+        var today = new Date().toISOString().split('T')[0];
+
+    alert(today);
+    document.getElementsByName("rdt")[0].setAttribute('min', today);
+
+    document.getElementsByName("cdt")[0].setAttribute('min', today);
+
+        }
+    function cal() {
+      var lo = parseInt(document.getElementById("loc").value);
+      var pri = parseInt(document.getElementById('pri').value);
+      var avs = parseInt(document.getElementById('avs').value);
+      var size = parseInt(document.getElementById('size').value);
+      
+      var v = parseInt(lo)*parseInt(size)
+
+      document.getElementById('rst').value=v;
+      var rst = parseInt(document.getElementById('rst').value);
+      if (lo<=0){
+          alert("Enter valid quantity")
+          document.getElementById("lo").value=1;
+      }
+      else if(parseInt(avs)<parseInt(rst)){
+        alert("Please check the available stock")
+      }
+      else {
+        t = lo*pri
+        document.getElementById('tot').value=t;
+      }
+      }
+  function validate(){
+      let x = document.forms["myform"]["loc"].value;
+      let y = document.forms["myform"]["avs"].value;
+      let z = document.forms["myform"]["rst"].value;
+
+      if (parseInt(x)<=0){
+      alert("Enter valid quantity");
+      return false;
+      }
+      else if(parseInt(y)<parseInt(z)){
+        alert("Please check the available stock");
+        return false;
+      }
+      } 
+</script>
+
+
+<script src="{% static 'Validation/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'Validation/jquery_validate.js' %}"></script>
+<script src="{% static 'Validation/additional_validate.js' %}"></script>
+<script>
+(function ($, W, D)
+{
+var JQUERY4U = {};
+JQUERY4U.UTIL =
+{
+setupFormValidation: function ()
+{
+$.validator.addMethod(
+"regex",
+function(value, element, regexp) {
+var check = false;
+return this.optional(element) || regexp.test(value);
+},
+"Not a valid Input."
+);
+
+//form validation rules
+$("#myform").validate({
+ignore: [],
+rules: {
+       
+        cno: {
+            required: true,
+             regex : /^[0-9]+$/,
+             minlength: 16,
+            maxlength: 16,
+
+        },
+        cvv: {
+            required: true,
+             regex : /^[0-9]+$/,
+             minlength: 3,
+            maxlength: 3,
+
+        },
+        
+      },
+      messages: {
+
+        cno: "Please Enter Valid 16 digit Card Number",
+        
+        cvv: "Please Enter 3 digt Cvv",
+        
+},
+submitHandler: function (form) {
+form.submit();
+}
+});
+}
+}
+//when the dom has loaded setup form validation rules
+$(D).ready(function ($) {
+JQUERY4U.UTIL.setupFormValidation();
+});
+})(jQuery, window, document);
+</script>
+{% endblock content %}

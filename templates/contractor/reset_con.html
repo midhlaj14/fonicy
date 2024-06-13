@@ -1,0 +1,125 @@
+{% extends 'contractor/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Reset Password</title>
+{% endblock title %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(192, 51, 51);">{{message}}</h5></center>
+{% endfor %}
+{% endif %}
+<style>
+    .error{
+        color:red
+    }
+</style>
+
+
+{% if data %}
+{% for i in data %}
+<div class="container-fluid py-5 my-5 px-0" style="width: 50%;">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="width: 50%;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Reset Password</p>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Reset Password</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/reset_con/" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <label for="use" class="form-label">Username</label>
+                        <input type="hidden" name="logid" value="{{i.log_id}}">
+                        <input type="text" readonly name="use" value="{{i.username}}" class="form-control" id="use" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">old Password</label>
+                        <input type="password" name="opas" class="form-control" id="password" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" name="npas" class="form-control" id="password" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">Confirm Password</label>
+                        <input type="password" name="cpas" class="form-control" id="cpas" required>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Reset">
+                    </div>
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+
+<script src="{% static 'Validation/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'Validation/jquery_validate.js' %}"></script>
+    <script src="{% static 'Validation/additional_validate.js' %}"></script>
+<script>
+(function ($, W, D)
+{
+var JQUERY4U = {};
+JQUERY4U.UTIL =
+{
+setupFormValidation: function ()
+{
+$.validator.addMethod(
+"regex",
+function(value, element, regexp) {
+var check = false;
+return this.optional(element) || regexp.test(value);
+},
+"Not a valid Input."
+);
+
+//form validation rules
+$("#myform").validate({
+ignore: [],
+rules: {
+
+            
+            npas: {
+                required: true,
+                 regex : /^[A-Za-z0-9@#*]+$/,
+                 minlength: 5,
+                maxlength: 15,
+
+            },
+          
+            
+          },
+          messages: {
+
+            
+            npas: "Please Enter Valid Password Name(5-15 digit alphanumeric  password  and @#* also allowed",
+            cpas: "Please Enter Valid Password Name(5-15 digit alphanumeric confirm password and same as above password and @#* also allowed",
+            
+},
+submitHandler: function (form) {
+form.submit();
+}
+});
+}
+}
+//when the dom has loaded setup form validation rules
+$(D).ready(function ($) {
+JQUERY4U.UTIL.setupFormValidation();
+});
+})(jQuery, window, document);
+</script>
+{% endblock content %}

@@ -1,0 +1,105 @@
+<section class="why_us_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Why Choose Us?
+        </h2>
+      </div>
+      <div class="why_us_container">
+        <div class="box">
+          <div class="img-box">
+            <img src="images/w1.png" alt="">
+          </div>
+          <div class="detail-box">
+            <h5>
+              Project done on time
+            </h5>
+            <p>
+              Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+              Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+              going through the
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <div class="img-box">
+            <img src="images/w2.png" alt="">
+          </div>
+          <div class="detail-box">
+            <h5>
+              Always avaliable
+            </h5>
+            <p>
+              Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+              Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+              going through the
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <div class="img-box">
+            <img src="images/w3.png" alt="">
+          </div>
+          <div class="detail-box">
+            <h5>
+              Professional and responsible
+            </h5>
+            <p>
+              Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in
+              Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+              going through the
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          Read More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  def buy_details(request):
+      if 'log_id' in request.session:
+         cursor.execute("select c.name,c.company,tp.product_type,o.date,o.re_date,o.size,o.price,o.load,o.amount,o.status,o.or_id from tb_product_type as tp inner join tb_order_product as o on o.tp_id=tp.tp_id inner join tb_contractor_register as c on c.log_id=o.log_id where o.o_type='buy'")
+          data = cursor.fetchall()
+         return render(request,'employee/buy_details.html',{'data':data})
+     else:
+         return redirect('/home')
+
+
+
+if 'log_id' in request.session:
+        dat = Order_product.objects.all()
+        data=[]
+        for i in dat:
+
+            print(i.re_date)
+            d1 = i.re_date
+            print(i)
+            d2 = datetime.datetime.now()
+            d2=d2.date()
+            diff=d1-d2
+            print("D2",d2)
+            print("RD",d1)
+            print("Diff",diff.days)
+            data.append({'log':i.log,'tp_id':i.tp_id,'date':i.date,'re_date':i.re_date,'size':i.size,'price':i.price,'load':i.load,'amount':i.amount,'status':i.status,'diff':diff.days})
+        print(data)
+        return render(request, 'employee/buy_details.html', {'data': data})
+    else:
+        return redirect('/home')
+
+
+
+        def view_buy(request):
+        if 'log_id' in request.session:
+            log_id = request.session['log_id']
+            # Retrieve data using Django ORM
+            data = Order_product.objects.filter(o_type='buy', log_id=log_id).select_related('tp_id__contractor')
+            return render(request, 'contractor/view_buy.html', {'data': data})
+        else:
+            return redirect('/home')        

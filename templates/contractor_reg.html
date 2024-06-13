@@ -1,0 +1,234 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Registration</title>
+{% endblock title %}
+
+{% block reg %} active {% endblock reg %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(31, 95, 31);">{{message}}</h5></center>
+{% endfor %}
+{% endif %} 
+
+<style>
+    .error{
+        color:red
+    }
+</style>
+
+<div class="container-fluid py-5 my-5 px-0">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Contractor Registration</p>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Contractor Registration</h5></center>
+
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/contractor_reg/" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-6">
+                        <label for="name" class="form-label">Your Full Name</label>
+                        <input type="text" class="form-control" id="name" name="n1" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="cname" class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="cname" name="n2" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="coname" class="form-label">Company Owner Name</label>
+                        <input type="text" class="form-control" id="coname" name="n3" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="lic" class="form-label">Upload Licence</label>
+                        <input type="file" class="form-control"  id="lic" name="n4" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="add" class="form-label">Company Address</label>
+                        <textarea class="form-control" style="height: 100px" id="add" name="n5" required></textarea>
+                    </div>
+                    <div class="col-6">
+                        <label for="on" class="form-label">Contact Number</label>
+                        <input type="number"  name="n6" class="form-control" id="on" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" name="n7" class="form-control" id="email" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="n8" class="form-control" id="username" required>
+                        <span id="cb" name="cb"></span>
+                    </div>
+                    <div class="col-6">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text"  name="n9" class="form-control" id="password" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="cpas" class="form-label">Confirm Password</label>
+                        <input type="text" name="n10" class="form-control" id="cpas" required>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Register">
+                    </div>
+                    </form><!-- Vertical Form -->
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+
+<script src="{% static 'Validation/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'Validation/jquery_validate.js' %}"></script>
+<script src="{% static 'Validation/additional_validate.js' %}"></script>
+
+<script>
+    (function ($, W, D)
+    {
+    var JQUERY4U = {};
+    JQUERY4U.UTIL =
+    {
+    setupFormValidation: function ()
+    {
+    $.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+    var check = false;
+    return this.optional(element) || regexp.test(value);
+    },
+    "Not a valid Input."
+    );
+    
+    //form validation rules
+    $("#myform").validate({
+    ignore: [],
+    rules: {
+                n1: {
+                  required: true,
+                  regex : /^[A-Za-z ]+$/,
+                  minlength: 3,
+    
+                },
+                n2: {
+                  required: true,
+                  regex : /^[A-Za-z ]+$/,
+                  minlength: 3,
+    
+                },
+               
+                n6: {
+                    required: true,
+                    digits:true,
+                       minlength: 10,
+                       maxlength: 10,
+                       regex : /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/
+                },
+                
+                n3: {
+                  required: true,
+                  minlength: 3,
+                  regex : /^[A-Za-z ]+$/,
+                },
+    
+                n7: {
+                 required: true,
+                 regex :  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    
+                },
+                n8: {
+                    required: true,
+                    regex : /^[A-Za-z0-9@]+$/,
+                    minlength: 5,
+                    maxlength: 15,
+    
+                },
+                n9: {
+                    required: true,
+                     regex : /^[A-Za-z0-9@#*]+$/,
+                     minlength: 5,
+                    maxlength: 15,
+    
+                },
+                n10: {
+                    required: true,
+                       regex : /^[A-Za-z0-9@#*]+$/,
+                       minlength: 5,
+                      maxlength: 15,
+                  equalTo: "#password",
+                  
+                  
+    
+                },
+                n4: {
+                    required: true,
+                     
+    
+                },
+                
+              },
+              messages: {
+    
+                n6:  "Please Enter Valid 10 digit Phone Number - Starting from 6, 7 or 8 or 9",
+                n8: "Please Enter Valid User Name(5-15 digit alphanumeric username",
+                n9: "Please Enter Valid Password Name(5-15 digit alphanumeric  password  and @#* also allowed",
+                n10: "Please Enter Valid Password Name(5-15 digit alphanumeric confirm password and same as above password and @#* also allowed",
+                uname:"User name is not available",
+    },
+    submitHandler: function (form) {
+    form.submit();
+    }
+    });
+    }
+    }
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function ($) {
+    JQUERY4U.UTIL.setupFormValidation();
+    });
+    })(jQuery, window, document);
+    </script>
+
+<script>
+$("#username").keyup(function () {
+    $('#uname').val("");
+   var n8 = $(this).val();
+   var count = n8.length;
+   $('#cb').html("");
+   if(count>4)
+  {
+   $.ajax({
+         url: '/check_username/',
+         data: {
+             'username': n8
+         },
+         dataType: 'json',
+         success: function (data) {
+              if (data.username_exists) {
+
+
+                $('#cb').css('color','red');
+                $('#cb').html(data.error);
+
+              }
+              else{
+
+                $('#cb').css('color','green');
+            $('#cb').html(data.success);
+            $('#uname').val(1);
+              }
+         }
+   });
+}
+});
+</script>
+{% endblock content %}

@@ -1,0 +1,128 @@
+{% extends 'master/index.html' %}
+{% load static %}
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Profile</h1>
+   
+</div><!-- End Page Title -->
+<br><br>
+    {% if messages %}
+    {% for message in messages %}
+        <center><h5 style="color: rgb(206, 41, 54);">{{message}}</h5></center>
+    {% endfor %}
+    {% endif %}
+    <style>
+        .error{
+            color:red
+        }
+    </style>
+
+<div class="row justify-content-center">
+    <div class="card mb-3" style="width: 50%;">
+            {% if data %}
+            {% for i in data %}
+              <div class="card-body">
+                    <center><h5 class="card-title">Reset Password</h5></center>
+            
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/ad_profile/" method="post" id="myform">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <label for="email" class="form-label">Username</label>
+                        <input type="hidden" name="n1" value="{{i.log_id}}">
+                        <input type="text" readonly value="{{i.username}}" class="form-control" id="email" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="opas" class="form-label">Old Password</label>
+                        <input type="password" name="n2" class="form-control"  id="opas" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" name="n3" class="form-control" id="password" required>
+                        </div>
+                    <div class="col-12">
+                        <label for="cpas" class="form-label">Confirm Password</label>
+                        <input type="password" name="n4" class="form-control" id="cpas" required>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary" value="Reset">
+                    </div>
+                    </form><!-- Vertical Form -->
+                </div>
+            
+            {% endfor %}
+            {% endif %}
+    </div>
+</div>
+
+    <script src="{% static 'Validation/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'Validation/jquery_validate.js' %}"></script>
+    <script src="{% static 'Validation/additional_validate.js' %}"></script>
+<script>
+(function ($, W, D)
+{
+var JQUERY4U = {};
+JQUERY4U.UTIL =
+{
+setupFormValidation: function ()
+{
+$.validator.addMethod(
+"regex",
+function(value, element, regexp) {
+var check = false;
+return this.optional(element) || regexp.test(value);
+},
+"Not a valid Input."
+);
+
+//form validation rules
+$("#myform").validate({
+ignore: [],
+rules: {
+
+            n2: {
+                required: true,
+                
+                },
+            n3: {
+                required: true,
+                 regex : /^[A-Za-z0-9@#*]+$/,
+                 minlength: 5,
+                maxlength: 15,
+
+            },
+            n4: {
+                required: true,
+                   regex : /^[A-Za-z0-9@#*]+$/,
+                   minlength: 5,
+                  maxlength: 15,
+              equalTo: "#password"
+
+            },
+            
+          },
+          messages: {
+
+            n: "Please Enter Valid 10 digit Phone Number - Starting from 6, 7 or 8 or 9",
+            username: "Please Enter Valid User Name(5-15 digit alphanumeric username",
+            n3: "Please Enter Valid Password Name(5-15 digit alphanumeric  password  and @#* also allowed",
+            n4: "Please Enter Valid Password Name(5-15 digit alphanumeric confirm password and same as above password and @#* also allowed",
+            uname:"User name is not available",
+},
+submitHandler: function (form) {
+form.submit();
+}
+});
+}
+}
+//when the dom has loaded setup form validation rules
+$(D).ready(function ($) {
+JQUERY4U.UTIL.setupFormValidation();
+});
+})(jQuery, window, document);
+</script>
+{% endblock content %}

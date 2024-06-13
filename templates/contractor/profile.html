@@ -1,0 +1,161 @@
+{% extends 'contractor/index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Profile</title>
+{% endblock title %}
+
+{% block profile %} active {% endblock profile %}
+{% block content %}
+
+<!-- Page Header Start -->
+
+<!-- Page Header End -->
+
+{% if messages %}
+{% for message in messages %}
+    <center><h5 style="color: rgb(31, 95, 31);">{{message}}</h5></center>
+{% endfor %}
+{% endif %} 
+<style>
+    .error{
+        color:red
+    }
+</style>
+<div class="container-fluid py-5 my-5 px-0">
+    <div class="text-center mx-auto wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+        <p class="fw-medium text-uppercase text-primary mb-2">Profile</p>
+    </div>
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60%;">
+                <div class="card-body">
+                    <center><h5 class="card-title">Profile</h5></center>
+                    {% if data %}
+                    {% for i in data %}
+                    <!-- Vertical Form -->
+                    <form class="row g-3" action="/contractor_profile/" method="post" id="myform" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-6">
+                        <label for="name" class="form-label">Your Full Name</label>
+                        <input type="text" class="form-control" id="name" name="n1" value="{{i.name}}" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="cname" class="form-label">Company Name</label>
+                        <input type="text" class="form-control" id="cname" name="n2" value="{{i.company}}" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="coname" class="form-label">Company Owner Name</label>
+                        <input type="text" class="form-control" id="coname" name="n3" value="{{i.owner_name}}" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="add" class="form-label">Company Address</label>
+                        <textarea class="form-control" style="height: 100px" id="add" name="n4" required>{{i.company_address}}</textarea>
+                    </div>
+                    <div class="col-6">
+                        <label for="on" class="form-label">Contact Number</label>
+                        <input type="number"  name="n5" class="form-control" value="{{i.contact_no}}" id="on" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" name="n6" class="form-control" id="email" value="{{i.email}}" required>
+                    </div>
+                    <input type="hidden" value="{{i.log_id}}" name="n7">
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-sm" value="Update">
+                    </div>
+                    <div class="text-center">
+                        Click here to Reset Password <br>
+                        <a href="/reset_con" class="btn btn-primary btn-sm" style="background-color: rgb(0, 110, 255);">Reset Password</a>
+                    </div>
+                    </form><!-- Vertical Form -->
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<script src="{% static 'Validation/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'Validation/jquery_validate.js' %}"></script>
+<script src="{% static 'Validation/additional_validate.js' %}"></script>
+
+<script>
+    (function ($, W, D)
+    {
+    var JQUERY4U = {};
+    JQUERY4U.UTIL =
+    {
+    setupFormValidation: function ()
+    {
+    $.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+    var check = false;
+    return this.optional(element) || regexp.test(value);
+    },
+    "Not a valid Input."
+    );
+    
+    //form validation rules
+    $("#myform").validate({
+    ignore: [],
+    rules: {
+                n1: {
+                  required: true,
+                  regex : /^[A-Za-z ]+$/,
+                  minlength: 3,
+    
+                },
+                n2: {
+                  required: true,
+                  regex : /^[A-Za-z ]+$/,
+                  minlength: 3,
+    
+                },
+               
+                n5: {
+                    required: true,
+                    digits:true,
+                       minlength: 10,
+                       maxlength: 10,
+                       regex : /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/
+                },
+                
+                n3: {
+                  required: true,
+                  minlength: 3,
+                  regex : /^[A-Za-z ]+$/,
+                },
+    
+                n6: {
+                 required: true,
+                 regex :  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    
+                },
+                
+                n4: {
+                    required: true,
+                     
+    
+                },
+                
+              },
+              messages: {
+    
+                n5: "Please Enter Valid 10 digit Phone Number - Starting from 6, 7 or 8 or 9",
+                
+    },
+    submitHandler: function (form) {
+    form.submit();
+    }
+    });
+    }
+    }
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function ($) {
+    JQUERY4U.UTIL.setupFormValidation();
+    });
+    })(jQuery, window, document);
+    </script>
+{% endblock content %}

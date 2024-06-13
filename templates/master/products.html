@@ -1,0 +1,39 @@
+{% extends 'master/index.html' %}
+
+{% block title %}
+<title>Product Type</title>
+{% endblock title %}
+
+{% block content %}
+<div class="pagetitle">
+    <h1>Product Type</h1>
+   
+</div><!-- End Page Title -->
+<br>
+
+
+
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <h1 class="display-5 mb-3">Products</h1>
+           
+        </div>
+        <div class="row g-4">
+            {% if data %}
+            {% for i in data %}
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="border-left: 1px solid silver;">
+               <td><img style="height: 250px; width: 100%;" src="{{i.image}}" alt=""></td>
+                <div class="bg-light p-4">
+                    <h6>{{i.ct.category}}</h6>
+                    <a class="d-block h5 lh-base mb-4" href="">{{i.product_type}}</a>
+                    
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<br>
+{% endblock content %}
